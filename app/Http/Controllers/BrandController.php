@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use App\Models\Multipic;
 use Illuminate\Support\Carbon;
 use Image;
 
@@ -108,5 +109,30 @@ class BrandController extends Controller
         Brand::find($id)->delete();
 
         return Redirect()->back()->with('success','Brand Delete Successfully');
+    }
+
+    //untuk multi image metode
+    public function Multipic(){
+        $images = Multipic::all();
+        return view('admin.multipic.index',compact('images'));
+    }
+
+    public function StoreImg(Request $request){
+        $image    = $request->file('image');
+        foreach ($image as $multi_image) {
+    
+        
+        $name_gen       = hexdec(uniqid()).'.'.$multi_image->getClientOriginalExtension();
+        Image::make($multi_image)->resize(300,200)->save('image/multi/'.$name_gen);
+
+        $last_image = 'image/multi/'.$name_gen;
+
+        Multipic::insert([
+            'image'   => $last_image,
+            'created_at'    => Carbon::now()
+        ]);
+        }//endforeach
+        return Redirect()->back()->with('success','Image Inserted Successfully');
+
     }
 }
