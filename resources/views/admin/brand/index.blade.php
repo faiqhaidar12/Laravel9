@@ -50,6 +50,7 @@
                                             <a href="{{ url('brand/edit/' . $brand->id) }}"
                                                 class="btn btn-warning">Edit</a>
                                             <a href="{{ url('brand/delete/' . $brand->id) }}"
+                                                onclick="return confirm('Are you sure to delete?')"
                                                 class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
