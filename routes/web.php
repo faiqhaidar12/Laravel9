@@ -18,8 +18,12 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/home', function () {
@@ -61,6 +65,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     // $users = User::all();
 
     // mengambil data dari tabel users
-    $users = DB::table('users')->get();
-    return view('dashboard',compact ('users'));
+    //$users = DB::table('users')->get();
+    return view('admin.index');
 })->name('dashboard');
+
+Route::get('/user/logout',[BrandController::class, 'Logout'])->name('user.logout');

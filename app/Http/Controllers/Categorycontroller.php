@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\DB;
 
 class Categorycontroller extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function AllCate(){
         
             //Query builder join table

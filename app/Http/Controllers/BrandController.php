@@ -6,10 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Multipic;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 use Image;
 
 class BrandController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function AllBrand(){
 
         $brands = Brand::latest()->paginate(5);
@@ -134,5 +142,10 @@ class BrandController extends Controller
         }//endforeach
         return Redirect()->back()->with('success','Image Inserted Successfully');
 
+    }
+
+    public function Logout(){
+        Auth::logout();
+        return Redirect()->route('login')->with('success','User Logout');
     }
 }
